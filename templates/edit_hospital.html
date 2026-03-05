@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Hospital</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+<h2>Edit Hospital</h2>
+
+<form method="POST">
+    <input class="form-control mb-3"
+           name="name"
+           value="{{ hospital.name }}"
+           placeholder="Hospital Name" required>
+
+    <input class="form-control mb-3"
+           name="contact"
+           value="{{ hospital.contact }}"
+           placeholder="Contact" required>
+
+    <input class="form-control mb-3"
+           name="latitude"
+           value="{{ hospital.latitude }}"
+           placeholder="Latitude" required>
+
+    <input class="form-control mb-3"
+           name="longitude"
+           value="{{ hospital.longitude }}"
+           placeholder="Longitude" required>
+
+    <button class="btn btn-primary">Update</button>
+    <a href="/admin/dashboard" class="btn btn-secondary">Cancel</a>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<form method="POST">
+    <input class="form-control mb-2" name="name" placeholder="Patient Name" required>
+    <input class="form-control mb-2" name="age" placeholder="Age" required>
+
+    <select class="form-control mb-2" name="gender">
+        <option>Male</option>
+        <option>Female</option>
+    </select>
+
+    <select class="form-control mb-3" name="doctor_id" required>
+        {% for d in doctors %}
+            <option value="{{ d.id }}">{{ d.to_dict().name }}</option>
+        {% endfor %}
+    </select>
+
+    <button class="btn btn-success w-100">Add Patient</button>
+</form>

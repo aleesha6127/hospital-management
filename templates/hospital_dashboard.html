@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #eef2f7;
+            font-family: "Segoe UI", system-ui, sans-serif;
+        }
+
+        /* ================= HEADER ================= */
+        .dashboard-header {
+            background: linear-gradient(135deg, #198754, #0d6efd);
+            color: white;
+            padding: 28px 32px;
+            border-radius: 18px;
+        }
+
+        .dashboard-header h2 {
+            font-weight: 700;
+        }
+
+        /* ================= KPI ================= */
+        .kpi-card {
+            border-radius: 16px;
+            border: none;
+        }
+
+        .kpi-card h6 {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 6px;
+        }
+
+        .kpi-card h3 {
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* ================= CARDS ================= */
+        .card {
+            border-radius: 18px;
+            border: none;
+        }
+
+        .progress {
+            height: 18px;
+            border-radius: 20px;
+        }
+
+        .progress-bar {
+            font-weight: 600;
+        }
+
+        .table th {
+            font-weight: 600;
+            background-color: #f8f9fa;
+        }
+
+        .action-btns .btn {
+            width: 100%;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body class="container py-4">
+
+<!-- ================= HEADER ================= -->
+<div class="dashboard-header d-flex justify-content-between align-items-center mb-4 shadow-sm">
+    <div>
+        <h2>{{ hospital.name }}</h2>
+        <p class="mb-0">Hospital Control Panel</p>
+    </div>
+
+    <div>
+        <a href="/logout" class="btn btn-outline-light">
+            Logout
+        </a>
+    </div>
+</div>
+
+<!-- ================= KPI ROW ================= -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card kpi-card shadow-sm p-3">
+            <h6>Departments</h6>
+            <h3>{{ departments|length }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card kpi-card shadow-sm p-3">
+            <h6>Doctors</h6>
+            <h3>{{ doctors|length }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card kpi-card shadow-sm p-3">
+            <h6>Profile Completion</h6>
+            <h3>{{ profile_percent }}%</h3>
+        </div>
+    </div>
+</div>
+
+<!-- ================= PROFILE COMPLETION ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="mb-3">Profile Completion</h5>
+
+        <div class="progress">
+            <div class="progress-bar bg-success"
+                 style="width: {{ profile_percent }}%">
+                {{ profile_percent }}%
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= ACTION BUTTONS ================= -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Departments</h5>
+                <p class="text-muted">Manage hospital departments</p>
+                <a href="/hospital/add-department" class="btn btn-primary btn-sm">
+                    + Add Department
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Doctors</h5>
+                <p class="text-muted">Manage doctors & schedules</p>
+                <a href="/hospital/add-doctor" class="btn btn-success btn-sm">
+                    + Add Doctor
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= DEPARTMENTS ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="mb-3">Departments</h5>
+
+        {% if departments %}
+            <ul class="list-group">
+                {% for d in departments %}
+                    <li class="list-group-item">
+                        {{ d.to_dict().name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted mb-0">No departments added yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ================= DOCTORS ================= -->
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="mb-3">Doctors</h5>
+
+        {% if doctors %}
+        <table class="table table-bordered align-middle">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Department</th>
+                    <th>Timing</th>
+                    <th style="width: 190px;">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for doc in doctors %}
+                {% set d = doc.to_dict() %}
+                <tr>
+                    <td>{{ d.name }}</td>
+                    <td>{{ d.specialization }}</td>
+                    <td>{{ d.department }}</td>
+                    <td>{{ d.timing }}</td>
+                    <td class="action-btns">
+
+                        <!-- 🔐 DOCTOR LOGIN -->
+                        <a href="/doctor/login/{{ doc.id }}"
+                           class="btn btn-sm btn-primary">
+                            Doctor Login
+                        </a>
+
+                        <!-- ✏️ EDIT -->
+                        <a href="/hospital/edit-doctor/{{ doc.id }}"
+                           class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+
+                        <!-- 🗑️ DELETE -->
+                        <a href="/hospital/delete-doctor/{{ doc.id }}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Delete this doctor?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p class="text-muted mb-0">No doctors added yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
