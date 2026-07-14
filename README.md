@@ -4,7 +4,7 @@ A web-based Hospital Management System developed using **Python, Flask, Firebase
 
 ## 🌐 Live Demo
 
-🔗 https://hospital-management-1zbu.onrender.com
+🔗 https://hospital-management-izbu.onrender.com/
 
 > **Note:** The application is hosted on Render's free instance. The first request may take a few seconds while the server starts.
 
