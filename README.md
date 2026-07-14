@@ -1,183 +1,108 @@
 # 🏥 Hospital Management System
 
-A web-based Hospital Management System built with **Flask** and **Firebase Firestore**. It supports three user roles — **Admin**, **Hospital**, and **Doctor** — and exposes a REST API for mobile app integration (appointment booking).
+A web-based Hospital Management System developed using **Python, Flask, Firebase, HTML, and CSS**. The application provides a digital platform for managing hospital operations, healthcare records, and related services.
 
----
+## 🌐 Live Demo
+
+🔗 https://hospital-management-1zbu.onrender.com
+
+> **Note:** The application is hosted on Render's free instance. The first request may take a few seconds while the server starts.
 
 ## ✨ Features
 
-### 👨‍💼 Admin
-- Login with admin credentials
-- View all registered hospitals
-- Add new hospitals (with image upload, location coordinates, and login credentials)
-
-### 🏨 Hospital
-- Login with hospital credentials
-- View hospital dashboard (departments & doctors overview)
-- Add / Edit / Delete departments
-- Add / Edit / Delete doctors (with specialization, timing, and password)
-
-### 👨‍⚕️ Doctor
-- Login via hospital dashboard (password-protected)
-- View assigned appointments
-- Accept / Reject appointments
-- Write prescriptions for patients
-
-### 📱 Mobile API
-- `POST /api/book-appointment` — Book an appointment from a mobile app (JSON payload)
-
----
-
-## 🗂️ Project Structure
-
-```
-hospital_management/
-│
-├── app.py                  # Main Flask application & all routes
-├── firebase_config.py      # Firebase Admin SDK initialization
-├── firebase_key.json       # Firebase service account key (keep private!)
-├── requirements.txt        # Python dependencies
-│
-├── static/
-│   └── uploads/            # Uploaded hospital images
-│
-└── templates/
-    ├── login.html
-    ├── admin_dashboard.html
-    ├── add_hospital.html
-    ├── hospital_dashboard.html
-    ├── add_department.html
-    ├── add_doctor.html
-    ├── edit_doctor.html
-    ├── doctor_login.html
-    ├── doctor_dashboard.html
-    ├── prescribe.html
-    └── ...
-```
-
----
+- 🏥 Hospital management dashboard
+- 👨‍⚕️ Doctor management
+- 🧑‍🤝‍🧑 Patient management
+- 📋 Healthcare record management
+- 🔥 Firebase integration
+- ☁️ Cloud-based data storage
+- 📱 Responsive web interface
+- 🔐 Secure Firebase Admin SDK integration
 
 ## 🛠️ Tech Stack
 
-| Layer       | Technology                        |
-|-------------|-----------------------------------|
-| Backend     | Python, Flask                     |
-| Database    | Firebase Firestore                |
-| Auth/Storage| Firebase Admin SDK                |
-| Frontend    | HTML, Jinja2 Templates            |
-| File Upload | Werkzeug                          |
+### Backend
+- Python
+- Flask
+- Gunicorn
 
----
+### Database & Cloud
+- Firebase
+- Cloud Firestore
+- Firebase Storage
 
-## ⚙️ Setup & Installation
+### Frontend
+- HTML
+- CSS
+- Jinja2
 
-### Prerequisites
-- Python 3.8+
-- A Firebase project with Firestore enabled
-- Firebase service account key (`firebase_key.json`)
+### Deployment
+- Render
 
-### 1. Clone the repository
-```bash
-git clone <your-repo-url>
-cd hospital_management
+## 📂 Project Structure
+
+```text
+hospital-management/
+├── static/
+│   └── css/
+├── templates/
+├── app.py
+├── firebase_config.py
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
-### 2. Create and activate a virtual environment
+## 🚀 Run Locally
+
+1. Clone the repository:
+
 ```bash
-python -m venv venv
-
-# Windows
-venv\Scripts\activate
-
-# macOS/Linux
-source venv/bin/activate
+git clone https://github.com/aleesha6127/hospital-management.git
 ```
 
-### 3. Install dependencies
+2. Open the project directory:
+
+```bash
+cd hospital-management
+```
+
+3. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure Firebase
-Place your Firebase service account key file as `firebase_key.json` in the project root.
+4. Add your Firebase service account key as:
 
-> ⚠️ **Never commit `firebase_key.json` to version control.** Add it to `.gitignore`.
+```text
+firebase_key.json
+```
 
-### 5. Run the application
+5. Run the application:
+
 ```bash
 python app.py
 ```
 
-The app will be available at **http://127.0.0.1:5000/**
+6. Open the application in your browser:
 
----
-
-## 🔌 API Endpoint
-
-### Book Appointment (Mobile App)
-
-**`POST /api/book-appointment`**
-
-**Request Body (JSON):**
-```json
-{
-  "hospital_id": "HOSPITAL_FIRESTORE_DOC_ID",
-  "patient_name": "John Doe",
-  "patient_age": 28,
-  "patient_gender": "Male",
-  "doctor_id": "DOCTOR_FIRESTORE_DOC_ID",
-  "date": "2026-03-10",
-  "time": "11:00 AM"
-}
+```text
+http://127.0.0.1:5000
 ```
 
-**Response:**
-```json
-{ "status": "success" }
-```
+## 🔐 Security
 
----
+Firebase service account credentials are not stored in the repository. During production deployment, the Firebase private key is securely configured using Render Secret Files.
 
-## 🔐 User Roles & Login
+## 👩‍💻 Developer
 
-| Role     | Login URL          | Credentials stored in        |
-|----------|--------------------|------------------------------|
-| Admin    | `/` (select Admin) | `admins` Firestore collection |
-| Hospital | `/` (select Hospital) | `hospitals` Firestore collection |
-| Doctor   | `/doctor/login/<doctor_id>` | `doctors` sub-collection under hospital |
+**Aleesha Anas**
 
----
-
-## 🗃️ Firestore Data Structure
-
-```
-admins/
-  └── {adminId}: { username, password }
-
-hospitals/
-  └── {hospitalId}: { name, username, password, contact, latitude, longitude, image, active }
-        ├── departments/
-        │     └── {deptId}: { name }
-        ├── doctors/
-        │     └── {doctorId}: { name, specialization, department, timing, password }
-        └── appointments/
-              └── {appointmentId}: { patient_name, patient_age, patient_gender, doctor_id, date, time, status, prescription? }
-```
-
----
-
-## 📝 .gitignore Recommendations
-
-```
-venv/
-__pycache__/
-firebase_key.json
-static/uploads/
-*.pyc
-```
-
----
+- Portfolio: https://aleesha6127.github.io/portfolio/
+- GitHub: https://github.com/aleesha6127
+- LinkedIn: https://www.linkedin.com/in/aleesha-anas-a7553533b/
 
 ## 📄 License
 
-This project was developed as part of an internship. All rights reserved.
+This project is developed for educational and portfolio purposes.
